@@ -4,6 +4,7 @@ const port = 5000;
 const router = require('./router/routes');
 const sequelize = require('./configs/sequelize');
 const middlewares = require('./middlewares/middGlobales');
+const response = require('./global/response');
 
 
 //**Middlewares */
@@ -17,7 +18,7 @@ app.use('/',router);
 //MIDLEWARE DE MANEJO DE ERRORES
 app.use((req, res)=>{
 
-    respuesta = new Response(true, 404, "URL not found GG");
+    respuesta = new response(true, 404, "URL not found GG");
     res.status(404).send(respuesta);
 });
 app.use((err, req, res, next) => {
@@ -34,3 +35,5 @@ app.use((err, req, res, next) => {
 app.listen(port, ()=>{
     console.log(`Listen to port ${port}`);
 });
+
+/* source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/db/creacion.sql; */
