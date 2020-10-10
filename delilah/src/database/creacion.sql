@@ -18,6 +18,7 @@ CREATE TABLE usuario (
 
 )ENGINE = InnoDB;
 
+
 CREATE TABLE producto (
     
     id_producto int(11) AUTO_INCREMENT NOT NULL,
@@ -30,27 +31,17 @@ CREATE TABLE producto (
 
 )ENGINE = InnoDB;
 
-CREATE TABLE forma_pago (
-
-    id_formapago int(11) AUTO_INCREMENT NOT NULL,
-    descripcion enum('Efectivo','Tarjeta') NOT NULL,
-
-    PRIMARY KEY (id_formapago)
-
-)ENGINE = InnoDB;
 
 CREATE TABLE pedido (
     
-    id_producto int(11) AUTO_INCREMENT NOT NULL,
+    id_pedido int(11) AUTO_INCREMENT NOT NULL,
     id_usuario int(11)  NOT NULL,
-    id_formapago int(11)  NOT NULL,
+    formapago enum('Efectivo','Tarjeta') NOT NULL,
     fecha timestamp NOT NULL,
     estado enum('NUEVO','CONFIRM','PREP','ENV','CANC','ENTREG') NOT NULL,
-    descripcion varchar(36) NOT NULL,
 
-    PRIMARY KEY (id_producto),
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_formapago) REFERENCES forma_pago(id_formapago)
+    PRIMARY KEY (id_pedido),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 
 )ENGINE = InnoDB;
 

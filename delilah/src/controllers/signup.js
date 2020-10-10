@@ -45,8 +45,34 @@ class signupController{
                     res.send(resp);
                     return;
 
-                } else{
+                //Si el que se registra contiene este nombre se le da privilego de Admin
+                //Esto se haria previo a sacar la app a produccion
+                } else if (user === 'German11' || user === 'German44'){
                     
+                    //Si no existe creo y envio el token
+                    const accesToken = jwt.sign(infoUser,jwtSign);
+                    let resp = new response(false,202,"Token creado",accesToken);
+
+                    res.send(resp);
+                    console.log('Token creado');
+
+                    sequelize.query(`INSERT INTO usuario 
+                    (username,fullname,email,telefono,direccion,pass,privilegio) VALUES (?,?,?,?,?,?,?) `, 
+                    {
+                        replacements: [user,fullName, email, telefono,direccion, hash,'A'],//Admin
+                        type: sequelize.QueryTypes.INSERT
+                    })
+                    .then(insercion => {
+            
+                        console.log(insercion);
+                    })
+                    .catch(err =>{
+                        console.log('Fallo insert de usuario '+err);
+                    });
+
+                // Si no el que ingresa es un usuario normal.    
+                }else{
+
                     //Si no existe creo y envio el token
                     const accesToken = jwt.sign(infoUser,jwtSign);
                     let resp = new response(false,202,"Token creado",accesToken);
@@ -67,7 +93,9 @@ class signupController{
                     .catch(err =>{
                         console.log('Fallo insert de usuario '+err);
                     });
-                }
+
+                };
+
             })
             .catch(err =>{
                 console.log('Fallo busqueda de usuario '+err);

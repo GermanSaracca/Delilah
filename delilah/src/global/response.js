@@ -1,10 +1,10 @@
 class Response{
 
-    constructor(err , cod, msj, token) {
+    constructor(err , cod, msj, data) {
         this.error = err;
         this.codigo = cod;
         this.mensaje = msj;
-        this.token = token;
+        this.data = data;
     }
 
 };

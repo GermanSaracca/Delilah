@@ -7,23 +7,38 @@ const loginCtrl = require('../controllers/login');
 const signupCtrl = require('../controllers/signup');
 const authTokenAdmin = require('../middlewares/authTokenAdmin');
 const authTokenUser = require('../middlewares/authTokenUser');
+const usuario = require('../controllers/usuario');
 
 
-//** Rutas **/
+//**----- RUTAS ----- **/
 
-// Ingreso
+//***  Ingreso ***/
 router.route('/login').post(loginCtrl.login);
 
-// Registro  
+//***  Registro ***/
 router.route('/signup').post(signupCtrl.signUp);
 
-// Admin
+//***  Admin ***/
 router.route('/admin').post(authTokenAdmin.ingreso,authTokenAdmin.isAdmin);
 
-// Users
+
+//*** Users ***/
+
+//Autenticacion de usuario
 router.route('/user').post(authTokenUser.ingreso);
 
-//Platos
+//Obtener todos los productos en stock
+router.route('/user/productos').get(usuario.productos);
+
+//Enviar pedido seleccionado
+router.route('/user/carrito').put(usuario.carrito);
+
+//Obtener estado de nuestro pedido
+router.route('/user/:id').get(usuario.estado);
+
+
+
+//---Platos
 router.route('/platos').get((req,res)=> res.status(200).send("aqui los platos"));
 
 
