@@ -168,4 +168,21 @@ FROM
 WHERE
     ped.id_pedido = 50;
 
+//Trae los 3 pedidos mas frecuentes ordenados de mayor a menor
+SELECT 
+    prod.nombre_producto,
+    count(*) AS veces_pedida,
+    prod.valor,
+    prod.id_producto
+FROM
+    pedido as ped
+    JOIN usuario as us ON(ped.id_usuario = us.id_usuario)
+    JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
+    JOIN producto as prod ON(det.id_producto = prod.id_producto)
+WHERE
+    us.username = 'German22' AND ped.estado = 'ENTREG'
+GROUP BY prod.nombre_producto 
+ORDER BY veces_pedida DESC
+LIMIT 3;
+
 

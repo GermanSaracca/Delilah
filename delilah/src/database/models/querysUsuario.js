@@ -5,6 +5,7 @@ const sequelize = require('../../configs/sequelize');
         -Buscar ID por nombre de usuario.
         -Insertar pedido.
         -Insertar detalles de pedido.
+        -Obtener los 3 platos mas pedidos por el usuario
 */ 
 
 
@@ -41,6 +42,29 @@ module.exports = {
         await sequelize.query(`INSERT INTO pedido_detalle (id_pedido,id_producto,cantidad) VALUES
         (?,?,?);`,{ replacements: [ IdPedido,id_prod,cantidad ], type: sequelize.QueryTypes.INSERT, transaction: t });
 
+    },
+
+    obtenerFavoritos : async function(username){
+
+        let favs = await sequelize.query(`SELECT 
+                count(*) AS veces_pedida,
+                prod.nombre_producto,
+                prod.valor,
+                prod.id_producto
+            FROM
+                pedido as ped
+                JOIN usuario as us ON(ped.id_usuario = us.id_usuario)
+                JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
+                JOIN producto as prod ON(det.id_producto = prod.id_producto)
+            WHERE
+                us.username = ? AND ped.estado = 'ENTREG'
+            GROUP BY prod.nombre_producto 
+            ORDER BY veces_pedida DESC
+            LIMIT 3`,
+        {replacements : [username],type: sequelize.QueryTypes.SELECT});
+
+            let favoritos = await favs;
+            return favoritos;
     }
 
 };

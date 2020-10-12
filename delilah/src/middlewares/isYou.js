@@ -21,25 +21,34 @@ module.exports = function isYou(req,res,next){
     { replacements : [idPedido], type: sequelize.QueryTypes.SELECT })
     .then(data =>{
 
-        let id_usuario = data[0].id_usuario;
+        if(data != ''){
 
-        sequelize.query(`SELECT username FROM usuario WHERE id_usuario = ?`,
-        { replacements : [id_usuario], type: sequelize.QueryTypes.SELECT })
-        .then(data2 =>{
+            let id_usuario = data[0].id_usuario;
 
-            let username = data2[0].username;
+            sequelize.query(`SELECT username FROM usuario WHERE id_usuario = ?`,
+            { replacements : [id_usuario], type: sequelize.QueryTypes.SELECT })
+            .then(data2 =>{
+    
+                let username = data2[0].username;
+    
+                console.log("El q envia: "+username);
+                console.log("El del pedido:"+user);
+    
+                if(username == user){
+    
+                    next();
+                }else{
+                    let respuesta = new response(true,400,"Usted no puede eliminar este pedido ya que no le pertenece");
+                    res.send(respuesta);
+                }
+            })
 
-            console.log("El q envia: "+username);
-            console.log("El del pedido:"+user);
+        }else {
 
-            if(username == user){
+            let respuesta = new response(true,400,"Id de pedido no valido");
+            res.send(respuesta);
+        }
 
-                next();
-            }else{
-                let respuesta = new response(true,400,"Usted no puede eliminar este pedido ya que no le pertenece");
-                res.send(respuesta);
-            }
-        })
     })
 };
 

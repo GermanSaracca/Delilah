@@ -7,10 +7,9 @@ const jwt = require('jsonwebtoken');
 const querysUsuario = require('../database/models/querysUsuario');
 
 
-
 class Usuario{
 
-    
+    //Obtener todo el Menu
     productos(req,res){
 
         sequelize.query(`SELECT id_producto,nombre_producto,valor,imagen FROM producto WHERE en_stock = 'T';`,{ type: sequelize.QueryTypes.SELECT })
@@ -27,6 +26,7 @@ class Usuario{
         });
     };
 
+    //Enviar pedido 
     async enviarPedido(req,res){
 
         // Inicializo la transaccion y la guardo en una variable
@@ -83,6 +83,7 @@ class Usuario{
             
     };
 
+    //Obtener estado de pedido
     estado(req,res){
 
         let idPedido = req.params.id;
@@ -165,7 +166,8 @@ class Usuario{
         })
     };
 
-    eliminarPedido(req,res){
+    //Cancelar pedido
+    cancelarPedido(req,res){
 
 
         let idPedido = req.params.id; 
@@ -173,7 +175,7 @@ class Usuario{
         //Busco fecha y hora exacta en que se realizo el pedido que se quiere eliminar
         sequelize.query(`SELECT fecha FROM pedido WHERE id_pedido = ?`,{ replacements:[idPedido], type: sequelize.QueryTypes.SELECT })
         .then(fecha =>{
-            
+            console.log(fecha);
             if(fecha != ''){
 
                 //Fecha y hora actual
@@ -190,21 +192,33 @@ class Usuario{
 
                 if(diffMinutos > 10){
 
-                    let msg =  `Ya no es posible eliminar su pedido ya que lo pidio hace mas de 10 minutos, ${Math.round(diffMinutos)} min para ser exactos ;)`;
+                    let msg =  `Ya no es posible cancelar su pedido ya que lo pidio hace mas de 10 minutos, ${Math.round(diffMinutos)} min para ser exactos ;)`;
                     let resp =  new response(true,418,msg);
                     res.send(resp);
                 }else{
-                    //Elimino el pedido 
-                    sequelize.query(`DELETE FROM pedido WHERE id_pedido = ?`,{ replacements:[idPedido], type: sequelize.QueryTypes.DELETE })
-                    .then(()=>{
-
-                        let resp =  new response(false,202,"Pedido eliminado");
-                        res.send(resp);
+                    //Cancelo el pedido 
+                    sequelize.query(`UPDATE pedido SET estado = 'CANC' WHERE id_pedido = ?`,
+                    { replacements : [ idPedido ], type: sequelize.QueryTypes.UPDATE})
+                    .then(update =>{
+                        
+                        // Si el segundo valor de la respuesta del update es 0 quiere decir que
+                        // no se pudo modificar nada ya q no existe el nro de id
+                        if(update[1] === 0){
+            
+                            let respuesta = new response(true,400,`El pedido nro ${idPedido} no existe`);
+                            res.send(respuesta);
+            
+                        }else {
+            
+                            let respuesta = new response(false,200,`Pedido nro ${idPedido} cancelado`);
+                            res.send(respuesta);
+                        }
                     })
-                    .catch(error=>{
-                        console.log(error);
-                        let resp =  new response(true,400,"Error de servidor");
-                        res.send(resp);
+                    .catch(err => {
+            
+                        console.log(err);
+                        let respuesta = new response(true,400,"No se pudo cancelar pedido");
+                        res.send(respuesta);
                     })
                 };
 
@@ -221,6 +235,16 @@ class Usuario{
         })
     };
 
+    //Obtiene los 3 platos mas pedidos por el usuario
+    async obtenerFavoritos(req,res){
+
+        let username = req.params.username;
+        
+        let favoritos = await querysUsuario.obtenerFavoritos(username);
+
+        let resp = new response(false,200,"Favoritos",favoritos);
+        res.send(resp);
+    }
 };
 
 module.exports = new Usuario();

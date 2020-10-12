@@ -21,7 +21,9 @@ router.route('/login').post(loginCtrl.login);
 //***  Registro ***/
 router.route('/signup').post(signupCtrl.signUp);
 
-//***  ADMIN ***/
+
+
+//***  ADMIN ***/______________________________________________________
 
 //Autenticacion de administrador
 router.route('/admin').post(authTokenAdmin.ingreso,authTokenAdmin.isAdmin);
@@ -29,11 +31,24 @@ router.route('/admin').post(authTokenAdmin.ingreso,authTokenAdmin.isAdmin);
 //Ruta para obtener todos los pedidos actuales del dia
 router.route('/admin/orders').get(admin.obtenerPedidos);
 
+//Obtener el detalle de un pedido en particular
+router.route('/admin/orders/detalle/:id').get(admin.detallePedido);
 
+//Modificar estado de un pedido
+router.route('/admin/orders/modificarEstado/:id').put(admin.modificarEstadoPedido);
 
+//Cancelar un pedido
+router.route('/admin/orders/cancelarPedido/:id').put(admin.cancelarPedido);
 
+//Cargar nuevo producto
+router.route('/admin/cargarProducto').post(admin.cargarProducto);
 
-//*** USUARIOS ***/
+//Historial de ventas (pedidos entregados)
+router.route('/admin/orders/historial').get(admin.historialPedidos);
+
+//______________________________________________________________________
+
+//*** USUARIOS ***/_____________________________________________________
 
 //Autenticacion de usuario
 router.route('/user').post(authTokenUser.ingreso);
@@ -47,12 +62,16 @@ router.route('/user/enviar').post(usuario.enviarPedido);
 //Obtener estado de nuestro pedido
 router.route('/user/estado/:id').get(usuario.estado);
 
-//Modificar un pedido ya realizado (solo se puede modificar antes de los 5 minutos de pedido)
+//Modificar un pedido ya realizado (solo se puede modificar antes de los 8 minutos de pedido)
 router.route('/user/modificar/:id').put(isYou,usuario.modificarPedido,usuario.enviarPedido);
 
 //Cancelar un pedido ya realizado (solo se puede cancelar antes de los 5 minutos de pedido)
-router.route('/user/cancelar/:id').delete(isYou,usuario.eliminarPedido);
+router.route('/user/cancelar/:id').put(isYou,usuario.cancelarPedido);
 
+//Obtener los 3 mas favoritos (3 productos mas veces pedidos)
+router.route('/user/favoritos/:username').get(usuario.obtenerFavoritos);
+
+//______________________________________________________________________
 
 
 
