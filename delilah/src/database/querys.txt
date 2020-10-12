@@ -91,3 +91,81 @@ BODY PARA ENVIAR PRODUCTOS
     }
 
 ]
+
+***QUERYS***************************
+
+INSERT INTO
+    pedido (id_usuario, formapago, estado)
+VALUES(2, 'Tarjeta', 'Nuevo');
+SELECT
+    *
+FROM
+    pedido_detalle;
+SELECT
+    *
+FROM
+    pedido;
+SELECT
+    *
+FROM
+    usuario;
+SELECT
+    id_usuario
+FROM
+    usuario
+WHERE
+    username = 'German22';
+
+SELECT
+    ped.estado,
+    ped.fecha,
+    ped.id_pedido,
+    GROUP_CONCAT(CONCAT(prod.nombre_producto, ' x ', det.cantidad)) as descripcion,
+    SUM((det.cantidad * prod.valor)) as total,
+    ped.formapago,
+    us.fullname,
+    us.username,
+    us.direccion,
+    us.telefono
+FROM
+    pedido as ped
+    JOIN usuario as us ON(ped.id_usuario = us.id_usuario)
+    JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
+    JOIN producto as prod ON(det.id_producto = prod.id_producto)
+WHERE
+    ped.id_pedido = 1;
+
+SELECT estado FROM pedido WHERE id_pedido = 3;
+
+SELECT fecha FROM pedido WHERE id_pedido = 28;
+
+DELETE FROM pedido WHERE id_pedido = 26;
+
+SELECT id_usuario FROM pedido WHERE id_pedido = 10;
+SELECT username FROM usuario WHERE id_usuario = 3;
+
+SELECT id_pedido FROM pedido WHERE estado <> 'ENTREGADO';
+
+--Productos de pedido por separado y valor unitario
+SELECT
+    ped.estado,
+    ped.fecha,
+    ped.id_pedido,
+    prod.nombre_producto,
+    det.cantidad,
+    prod.valor as valor_unitario,
+    (det.cantidad * prod.valor) as total,
+    ped.formapago,
+    us.fullname,
+    us.username,
+    us.direccion,
+    us.telefono
+FROM
+    pedido as ped
+    JOIN usuario as us ON(ped.id_usuario = us.id_usuario)
+    JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
+    JOIN producto as prod ON(det.id_producto = prod.id_producto)
+WHERE
+    ped.id_pedido = 50;
+
+

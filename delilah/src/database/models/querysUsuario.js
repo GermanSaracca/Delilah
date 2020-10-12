@@ -1,7 +1,7 @@
 const sequelize = require('../../configs/sequelize');
 
 /*
-    Este modula importa tres funciones
+    Este modula exporta tres funciones
         -Buscar ID por nombre de usuario.
         -Insertar pedido.
         -Insertar detalles de pedido.

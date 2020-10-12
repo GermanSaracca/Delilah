@@ -1,10 +1,11 @@
 const response = require('../global/response');
 const sequelize = require('../configs/sequelize');
-
+var moment = require('moment');
 const jwtSign = require('../global/envs');
 const jwt = require('jsonwebtoken');
 
 const querysUsuario = require('../database/models/querysUsuario');
+
 
 
 class Usuario{
@@ -26,7 +27,7 @@ class Usuario{
         });
     };
 
-    async carrito(req,res){
+    async enviarPedido(req,res){
 
         // Inicializo la transaccion y la guardo en una variable
         const t = await sequelize.transaction();
@@ -89,9 +90,16 @@ class Usuario{
         sequelize.query(`SELECT estado FROM pedido WHERE id_pedido = ?;`,{ replacements:[idPedido] ,type: sequelize.QueryTypes.SELECT })
         .then(estado=>{
 
-            console.log(estado);
-            let resp =  new response(false,200,"Estado de pedido",estado);
-            res.send(resp);
+            if(estado == ''){
+
+                let resp =  new response(true,400,"Numero de pedido no valido");
+                res.send(resp);
+            }else{
+
+                let resp =  new response(false,200,"Estado de pedido",estado);
+                res.send(resp);
+            }
+
         })
         .catch(err =>{
             
@@ -99,7 +107,119 @@ class Usuario{
             let resp =  new response(true,400,"Informacion invalida");
             res.send(resp);
         })
-    }
+    };
+
+    //Esto funcionara como un middleware para eliminar el pedido enviado 
+    //y luego se instanciara nuevamente el metodo "enviarPedido" para crear un nuevo pedido
+    modificarPedido(req,res,next){
+
+        let idPedido = req.params.id; 
+        
+        //Busco fecha y hora exacta en que se realizo el pedido que se quiere modificar
+        sequelize.query(`SELECT fecha FROM pedido WHERE id_pedido = ?`,{ replacements:[idPedido], type: sequelize.QueryTypes.SELECT })
+        .then(fecha =>{
+            
+            if(fecha != ''){
+
+                //Fecha y hora actual
+                let fechaNow = new Date();
+                //Fecha en que se concreto el pedido original
+                let fechaOriginalPedido = fecha[0].fecha;
+                // Comparo las dos fechas y obtengo la diferencia en milisegundos
+                let a = moment(fechaNow);
+                let b = moment(fechaOriginalPedido);
+
+                let diffMiliseg = a.diff(b);//Diferencia en milisegundos
+
+                let diffMinutos = diffMiliseg/60000;//Paso la diferencia a minutos
+
+                if(diffMinutos > 8){
+
+                    let msg =  `Ya no es posible modificar su pedido ya que lo pidio hace mas de 8 minutos, ${Math.round(diffMinutos)} min para ser exactos ;)`;
+                    let resp =  new response(true,418,msg);
+                    res.send(resp);
+                }else{
+                    //Primero elimino el pedido original
+                    sequelize.query(`DELETE FROM pedido WHERE id_pedido = ?`,{ replacements:[idPedido], type: sequelize.QueryTypes.DELETE })
+                    .then(resp=>{
+                        //Lo mando al metodo de crear nuevo pedio
+                        next();
+                    })
+                    .catch(error=>{
+                        console.log(error);
+                        let resp =  new response(true,400,"Error de servidor");
+                        res.send(resp);
+                    })
+                };
+
+            }else{
+
+                let resp =  new response(true,400,"Numero de pedido no valido");
+                res.send(resp); 
+            };
+        })
+        .catch(err=>{
+            console.log(err);
+            let resp =  new response(true,400,"Error de servidor");
+            res.send(resp);
+        })
+    };
+
+    eliminarPedido(req,res){
+
+
+        let idPedido = req.params.id; 
+        
+        //Busco fecha y hora exacta en que se realizo el pedido que se quiere eliminar
+        sequelize.query(`SELECT fecha FROM pedido WHERE id_pedido = ?`,{ replacements:[idPedido], type: sequelize.QueryTypes.SELECT })
+        .then(fecha =>{
+            
+            if(fecha != ''){
+
+                //Fecha y hora actual
+                let fechaNow = new Date();
+                //Fecha en que se concreto el pedido original
+                let fechaOriginalPedido = fecha[0].fecha;
+                // Comparo las dos fechas y obtengo la diferencia en milisegundos
+                let a = moment(fechaNow);
+                let b = moment(fechaOriginalPedido);
+
+                let diffMiliseg = a.diff(b);//Diferencia en milisegundos
+
+                let diffMinutos = diffMiliseg/60000;//Paso la diferencia a minutos
+
+                if(diffMinutos > 10){
+
+                    let msg =  `Ya no es posible eliminar su pedido ya que lo pidio hace mas de 10 minutos, ${Math.round(diffMinutos)} min para ser exactos ;)`;
+                    let resp =  new response(true,418,msg);
+                    res.send(resp);
+                }else{
+                    //Elimino el pedido 
+                    sequelize.query(`DELETE FROM pedido WHERE id_pedido = ?`,{ replacements:[idPedido], type: sequelize.QueryTypes.DELETE })
+                    .then(()=>{
+
+                        let resp =  new response(false,202,"Pedido eliminado");
+                        res.send(resp);
+                    })
+                    .catch(error=>{
+                        console.log(error);
+                        let resp =  new response(true,400,"Error de servidor");
+                        res.send(resp);
+                    })
+                };
+
+            }else{
+
+                let resp =  new response(true,400,"Numero de pedido no valido");
+                res.send(resp); 
+            };
+        })
+        .catch(err=>{
+            console.log(err);
+            let resp =  new response(true,400,"Error de servidor");
+            res.send(resp);
+        })
+    };
 
 };
 

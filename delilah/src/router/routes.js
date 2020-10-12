@@ -5,10 +5,13 @@ const router = express.Router();
 // Controladores
 const loginCtrl = require('../controllers/login');
 const signupCtrl = require('../controllers/signup');
+const usuario = require('../controllers/usuario');
+const admin = require('../controllers/admin');
+
+// Middlewares
 const authTokenAdmin = require('../middlewares/authTokenAdmin');
 const authTokenUser = require('../middlewares/authTokenUser');
-const usuario = require('../controllers/usuario');
-
+const isYou = require('../middlewares/isYou');
 
 //**----- RUTAS ----- **/
 
@@ -18,11 +21,19 @@ router.route('/login').post(loginCtrl.login);
 //***  Registro ***/
 router.route('/signup').post(signupCtrl.signUp);
 
-//***  Admin ***/
+//***  ADMIN ***/
+
+//Autenticacion de administrador
 router.route('/admin').post(authTokenAdmin.ingreso,authTokenAdmin.isAdmin);
 
+//Ruta para obtener todos los pedidos actuales del dia
+router.route('/admin/orders').get(admin.obtenerPedidos);
 
-//*** Users ***/
+
+
+
+
+//*** USUARIOS ***/
 
 //Autenticacion de usuario
 router.route('/user').post(authTokenUser.ingreso);
@@ -31,15 +42,20 @@ router.route('/user').post(authTokenUser.ingreso);
 router.route('/user/productos').get(usuario.productos);
 
 //Enviar pedido seleccionado
-router.route('/user/carrito').put(usuario.carrito);
+router.route('/user/enviar').post(usuario.enviarPedido);
 
 //Obtener estado de nuestro pedido
-router.route('/user/:id').get(usuario.estado);
+router.route('/user/estado/:id').get(usuario.estado);
+
+//Modificar un pedido ya realizado (solo se puede modificar antes de los 5 minutos de pedido)
+router.route('/user/modificar/:id').put(isYou,usuario.modificarPedido,usuario.enviarPedido);
+
+//Cancelar un pedido ya realizado (solo se puede cancelar antes de los 5 minutos de pedido)
+router.route('/user/cancelar/:id').delete(isYou,usuario.eliminarPedido);
 
 
 
-//---Platos
-router.route('/platos').get((req,res)=> res.status(200).send("aqui los platos"));
+
 
 
 module.exports = router;
