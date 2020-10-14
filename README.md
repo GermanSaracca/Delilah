@@ -11,17 +11,21 @@ PASOS PARA INSTALACION Y PRUEBA DE API
 
 3- Dentro de la carpeta 'src' crear un archivo .env con la siguiente informacion dentro:  SECRET_TOKEN=G3RM4N
 
-4- Instalar XAMPP. Ir a la carpeta llamada 'xampp' en  disco C: => luego a carpeta 'mysql' =>  luego a carpeta 'bin' y dentro de 'bin', clickear la barra de direcciones y escribir "cmd" para abrir la consola de Windows.
+4- Instalar XAMPP. Ir a la carpeta llamada 'xampp' en  disco C: => luego a carpeta 'mysql' =>  luego a carpeta 'bin'.
+Dentro de 'bin', clickear la barra de direcciones y escribir "cmd" para abrir la consola de Windows.
 
 5- Activar MySQL desde la consola de XAMPP.
 
 6- Dentro de la consola de Windows tipear : mysql -u root
 
-7- Luego ingresar las siguientes lineas por separado. Una corresponde a la crecion de las tablas y la otra a la insercion de productos.
+7- Luego ingresar las siguientes lineas por separado. 
+   Una corresponde a la crecion de las tablas y la otra a la insercion de productos.
   CREACION DE TABLAS => source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/creacion.sql;
   INSERCION DE DATOS => source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/insercion.sql;
+  
+8-Dentro de la consola de Windows tipear 'use delilah;'
 
-8- Dentro de la consola de VSCode posicionarse dentro de la carpeta 'src' y tipear 'nodemon index'
+9- Dentro de la consola de VSCode posicionarse dentro de la carpeta 'src' y tipear 'nodemon index'
    Deberia entonces mostrar lo siguiente en la consola :
       Listen to port 5000
       warning: please use IANA standard timezone format ('Etc/GMT0')
