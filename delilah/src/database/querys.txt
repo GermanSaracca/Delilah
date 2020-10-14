@@ -28,7 +28,8 @@ WHERE
     WHERE username = 'German22';
 }
 
-/* source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/db/creacion.sql;
+/* source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/creacion.sql;
+/* source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/insercion.sql;
 ADMIN
 {
 "user" : "German11",

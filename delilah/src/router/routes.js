@@ -29,22 +29,28 @@ router.route('/signup').post(signupCtrl.signUp);
 router.route('/admin').post(authTokenAdmin.ingreso,authTokenAdmin.isAdmin);
 
 //Ruta para obtener todos los pedidos actuales del dia
-router.route('/admin/orders').get(admin.obtenerPedidos);
+router.route('/admin/orders').get(authTokenAdmin.Admin,admin.obtenerPedidos);
 
 //Obtener el detalle de un pedido en particular
-router.route('/admin/orders/detalle/:id').get(admin.detallePedido);
+router.route('/admin/orders/detalle/:id').get(authTokenAdmin.Admin,admin.detallePedido);
 
 //Modificar estado de un pedido
-router.route('/admin/orders/modificarEstado/:id').put(admin.modificarEstadoPedido);
+router.route('/admin/orders/modificarEstado/:id').put(authTokenAdmin.Admin,admin.modificarEstadoPedido);
 
 //Cancelar un pedido
-router.route('/admin/orders/cancelarPedido/:id').put(admin.cancelarPedido);
+router.route('/admin/orders/cancelarPedido/:id').put(authTokenAdmin.Admin,admin.cancelarPedido);
+
+//Eliminar un pedido
+router.route('/admin/orders/eliminarPedido/:id').delete(authTokenAdmin.Admin,admin.eliminarPedido);
 
 //Cargar nuevo producto
-router.route('/admin/cargarProducto').post(admin.cargarProducto);
+router.route('/admin/cargarProducto').post(authTokenAdmin.Admin,admin.cargarProducto);
+
+//Eliminar un producto
+router.route('/admin/eliminarProducto/:id_producto').delete(authTokenAdmin.Admin,admin.eliminarProducto);
 
 //Historial de ventas (pedidos entregados)
-router.route('/admin/orders/historial').get(admin.historialPedidos);
+router.route('/admin/orders/historial').get(authTokenAdmin.Admin,admin.historialPedidos);
 
 //______________________________________________________________________
 

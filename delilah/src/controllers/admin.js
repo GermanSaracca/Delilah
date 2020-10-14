@@ -148,7 +148,7 @@ class Admin{
         .then(data=>{
 
             let totalDeProds = data[0];
-            let resp =  new response(false,200,`${nombreProd} agregado a la lista de productos, ahora tiene ${totalDeProds} productos en stock`);
+            let resp =  new response(false,200,`${nombreProd} agregado a la lista de productos`);
             res.send(resp);
             console.log(data);
         })
@@ -158,6 +158,62 @@ class Admin{
             res.send(resp);
             console.log(err);
         })
+    };
+
+    eliminarProducto(req,res){
+
+        let idProducto = req.params.id_producto;
+
+        sequelize.query(`DELETE FROM producto WHERE id_producto = ?`,
+        {replacements : [idProducto]})
+        .then(deleted =>{
+
+            let rowsEliminadas = deleted[0].affectedRows;
+
+            if(rowsEliminadas === 0){
+
+                let resp = new response(true,400,`El id: ${idProducto} no corresponde a un producto o ya fue eliminado`);
+                res.send(resp);
+            }else{
+
+                let resp = new response(false,200,`Producto ${idProducto} eliminado`);
+                res.send(resp);
+
+            }
+            
+        })
+        .catch(err=> console.log(err));
+
+    };
+
+    eliminarPedido(req,res){
+
+        let idPedido = req.params.id; 
+
+        sequelize.query(`DELETE FROM pedido WHERE id_pedido = ?`,
+        { replacements : [ idPedido ]})
+        .then(deleted =>{
+
+            let rowsEliminadas = deleted[0].affectedRows;
+            if(rowsEliminadas === 0){
+
+                let resp = new response(true,400,`El pedido: ${idPedido} no existe`);
+                res.send(resp);
+            }else{
+
+                let resp = new response(false,200,`Pedido ${idPedido} eliminado`);
+                res.send(resp);
+
+            };
+        })
+        .catch(err => {
+
+            console.log(err);
+            let resp = new response(false,200,`Error de servidor`);
+            res.send(resp);
+
+        });
+
     };
 
     async historialPedidos(req,res){
@@ -186,7 +242,7 @@ class Admin{
         let respuesta = new response(false,200,"Historial de pedidos entregados",pedidosEntregados);
         res.send(respuesta);
 
-    }
+    };
 
 };
 

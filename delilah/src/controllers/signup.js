@@ -46,8 +46,8 @@ class signupController{
                     return;
 
                 //Si el que se registra contiene este nombre se le da privilego de Admin
-                //Esto se haria previo a sacar la app a produccion
-                } else if (user === 'German11' || user === 'German44'){
+                //Esto se haria previo a sacar la app a produccion para que nadie pueda registrarse con ese nombre
+                } else if (user === 'German11'){
                     
                     //Si no existe creo y envio el token
                     const accesToken = jwt.sign(infoUser,jwtSign);

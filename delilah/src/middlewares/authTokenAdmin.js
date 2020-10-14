@@ -41,7 +41,7 @@ class AuthToken{
             res.json(respuesta);
         }
     };
-
+    //Verificar que es admin para ingresar a la pagina inicial
     isAdmin(req,res){
 
         let username = req.body.user;
@@ -69,6 +69,36 @@ class AuthToken{
         .catch(err =>{console.log(err)});
 
     };
+    //Verificar que es admin para cada ruta de admin
+    Admin(req,res,next){
+
+        const token = req.headers.authorization.split(' ')[1];
+        //Descifro el token para encontrar que usuario quiere eliminar y si su pedido le corresponde
+        const verificarToken = jwt.verify(token,jwtSign);
+        //Usuario 
+        let username = verificarToken.user;
+
+        sequelize.query(`SELECT privilegio FROM usuario WHERE username = ? `, { replacements: [username],
+            type: sequelize.QueryTypes.SELECT })
+            .then(privilegio =>{
+
+                console.log(privilegio);
+                let privilegioUser = privilegio[0].privilegio;
+
+                if(privilegioUser == 'A'){
+
+                    console.log("--Es Admin, next.");
+                    next();
+
+                }else {
+
+                    let respuesta = new response(false,200,"Usted no posee los privilegios");
+                    console.log("--No es Admin");
+                    res.status(400).json(respuesta);
+                }
+            })
+        .catch(err =>{console.log(err)});
+    }
 
 };
 

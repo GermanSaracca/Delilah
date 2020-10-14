@@ -1,0 +1,126 @@
+REGISTRAR ADMIN 
+//El admin va con este username, la app dara automaticamente el 
+  privilegio de admin a este username.
+{
+"user" : "German11",
+"fullName" : "German Saracca",
+"email": "german11@gmail.com",
+"telefono" : "2494334455",
+"direccion" : "Alsina 90",
+"pass" : "German11"
+}
+
+REGISTRAR USUARIOS
+
+{
+    "user" : "German22",
+    "fullName" : "German Dosdos",
+    "email": "german22@gmail.com",
+    "telefono" : "2494678901",
+    "direccion" : "Mitre 333",
+    "pass" : "German22"
+}
+-------------------------
+{
+    "user" : "Fabian33",
+    "fullName" : "Fabian Trestres",
+    "email": "fabian33@gmail.com",
+    "telefono" : "2494252565",
+    "direccion" : "Alsina 608",
+    "pass" : "Fabian33"
+}
+--------------------------
+{
+    "user" : "Lucas444",
+    "fullName" : "Lucas Cuatrochi",
+    "email": "luki440@gmail.com",
+    "telefono" : "2494456544",
+    "direccion" : "Mitre 44",
+    "pass" : "Lucas444"
+}
+
+AUTENTICAR ADMIN (http://localhost:5000/admin)
+
+-Headers
+    Authorization  :  Bearer {token}
+
+-Body
+    {
+    "user" : "German11"
+    }
+------------------------------------
+
+AUTENTICAR USER (http://localhost:5000/user)
+
+-Headers
+    Authorization  :  Bearer {token}
+
+-Body
+    {
+    "user" : "{username}"
+    }
+------------------------------------    
+
+***RUTAS DE USUARIO COMUN***
+
+VER PRODUCTOS A LA VENTA (http://localhost:5000/user/productos)
+
+-Headers
+    Authorization  :  Bearer {token}
+------------------------------------    
+
+ENVIAR PRODUCTOS SELECCIONADOS (http://localhost:5000/user/enviar)
+
+-Headers
+    Authorization  :  Bearer {token}
+
+-Body
+[
+    {
+        "formaPago": "Efectivo"
+    },
+    {
+        "id_producto": 2,
+        "cantidad": 5
+    }
+]
+------------------------------------    
+
+ESTADO DE PEDIDO (http://localhost:5000/user/estado/:idPedido(numero))
+
+-Headers
+    Authorization  :  Bearer {token}
+------------------------------------    
+
+MODIFICAR PEDIDO (http://localhost:5000/user/modificar/:idPedido(numero))
+
+-Headers
+    Authorization  :  Bearer {token}
+
+-Body 
+[
+    {
+        "formaPago": "Efectivo"
+    },
+    {
+        "id_producto": 2,
+        "cantidad": 5
+    }
+]
+------------------------------------  
+
+CANCELAR PEDIDO (http://localhost:5000/user/cancelar/:idPedido(numero))
+
+-Headers
+    Authorization  :  Bearer {token}
+------------------------------------ 
+
+OBTENER FAVORITOS (http://localhost:5000/user/favoritos/:username)
+
+-Headers
+    Authorization  :  Bearer {token}
+
+
+***RUTAS DE ADMINISTRADOR***
+
+

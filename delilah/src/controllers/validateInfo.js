@@ -22,6 +22,21 @@ class validateInfo {
         }
     }
 
+    validateOnlyEmail(param){
+
+        // un @ que separe y un '.[algo]' al final
+        const emailReqs = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        
+        //validacion nombre de usuario
+        if(emailReqs.test(param)){
+    
+            return true;
+        }else {
+    
+            return false;
+        }
+    }
+
     validateFullName (param){
 
         // Permite espaciados en el nombre, cada nombre o apellido debe arrancar con mayuscula.
