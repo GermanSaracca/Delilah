@@ -20,8 +20,8 @@ Dentro de 'bin', clickear la barra de direcciones y escribir "cmd" para abrir la
 
 7- Luego ingresar las siguientes lineas por separado. 
    Una corresponde a la crecion de las tablas y la otra a la insercion de productos.
-  CREACION DE TABLAS => source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/creacion.sql;
-  INSERCION DE DATOS => source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/insercion.sql;
+  CREACION DE TABLAS => 'source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/creacion.sql;'
+  INSERCION DE DATOS => 'source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/insercion.sql;'
   
 8-Dentro de la consola de Windows tipear 'use delilah;'
 
