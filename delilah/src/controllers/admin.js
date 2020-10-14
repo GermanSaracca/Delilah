@@ -36,7 +36,7 @@ class Admin{
                
         }catch(error){
 
-            let resp = new response(false,200,"Error de servidor");
+            let resp = new response(true,500,"Error de servidor");
             res.send(resp);
         }
     };
@@ -60,14 +60,24 @@ class Admin{
             info.push(detail);
             info.push(infoUser);
 
-            let respuesta = new response(false,200,"Detalle pedido e informacion completa de usuario", info);
-            res.send(respuesta);
+            console.log(detail.detalleProductos);
+
+            if(detail.detalleProductos == '' ){
+
+                let respuesta = new response(true,404,"Pedido no encontrado");
+                res.send(respuesta);
+            }else{
+
+                let respuesta = new response(false,200,"Detalle pedido e informacion completa de usuario", info);
+                res.send(respuesta);
+            }
+
 
         }catch(error){
 
             console.error();
 
-            let respuesta = new response(true,400,"Fallo busqueda detalle de pedido");
+            let respuesta = new response(true,500,"Error de servidor");
             res.send(respuesta);
 
         }
@@ -88,19 +98,19 @@ class Admin{
             // no se pudo modificar nada ya q no existe el nro de id
             if(update[1] === 0){
 
-                let respuesta = new response(true,400,`El pedido nro ${idPedido} no existe`);
+                let respuesta = new response(true,404,`El pedido nro ${idPedido} no existe`);
                 res.send(respuesta);
 
             }else {
 
-                let respuesta = new response(false,200,`Pedido nro ${idPedido} modificado`);
+                let respuesta = new response(false,202,`Pedido nro ${idPedido} modificado`);
                 res.send(respuesta);
             }
         })
         .catch(err => {
 
             console.log(err);
-            let respuesta = new response(true,400,"No se pudo modificar pedido");
+            let respuesta = new response(true,500,"Error de servidor");
             res.send(respuesta);
         })
     };
@@ -118,19 +128,19 @@ class Admin{
             // no se pudo modificar nada ya q no existe el nro de id
             if(update[1] === 0){
 
-                let respuesta = new response(true,400,`El pedido nro ${idPedido} no existe`);
+                let respuesta = new response(true,404,`El pedido nro ${idPedido} no existe`);
                 res.send(respuesta);
 
             }else {
 
-                let respuesta = new response(false,200,`Pedido nro ${idPedido} cancelado`);
+                let respuesta = new response(false,202,`Pedido nro ${idPedido} cancelado`);
                 res.send(respuesta);
             }
         })
         .catch(err => {
 
             console.log(err);
-            let respuesta = new response(true,400,"No se pudo cancelar pedido");
+            let respuesta = new response(true,500,"Error de servidor");
             res.send(respuesta);
         })
     };
@@ -147,14 +157,13 @@ class Admin{
         (?,?,?,?)`,{replacements:[nombreProd,valorProd,imgProd,enStock], type: sequelize.QueryTypes.INSERT})
         .then(data=>{
 
-            let totalDeProds = data[0];
-            let resp =  new response(false,200,`${nombreProd} agregado a la lista de productos`);
+            let resp =  new response(false,202,`${nombreProd} agregado a la lista de productos`);
             res.send(resp);
             console.log(data);
         })
         .catch(err=>{
 
-            let resp =  new response(true,400,`${nombreProd} no se pudo agregar`);
+            let resp =  new response(true,500,`${nombreProd} no se pudo agregar,error de servidor`);
             res.send(resp);
             console.log(err);
         })
@@ -172,11 +181,11 @@ class Admin{
 
             if(rowsEliminadas === 0){
 
-                let resp = new response(true,400,`El id: ${idProducto} no corresponde a un producto o ya fue eliminado`);
+                let resp = new response(true,404,`El id: ${idProducto} no corresponde a un producto o ya fue eliminado`);
                 res.send(resp);
             }else{
 
-                let resp = new response(false,200,`Producto ${idProducto} eliminado`);
+                let resp = new response(false,202,`Producto ${idProducto} eliminado`);
                 res.send(resp);
 
             }
@@ -197,11 +206,11 @@ class Admin{
             let rowsEliminadas = deleted[0].affectedRows;
             if(rowsEliminadas === 0){
 
-                let resp = new response(true,400,`El pedido: ${idPedido} no existe`);
+                let resp = new response(true,404,`El pedido: ${idPedido} no existe`);
                 res.send(resp);
             }else{
 
-                let resp = new response(false,200,`Pedido ${idPedido} eliminado`);
+                let resp = new response(false,202,`Pedido ${idPedido} eliminado`);
                 res.send(resp);
 
             };
@@ -209,7 +218,7 @@ class Admin{
         .catch(err => {
 
             console.log(err);
-            let resp = new response(false,200,`Error de servidor`);
+            let resp = new response(false,500,`Error de servidor`);
             res.send(resp);
 
         });

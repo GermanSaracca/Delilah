@@ -39,6 +39,30 @@ REGISTRAR USUARIOS
     "pass" : "Lucas444"
 }
 
+
+***************************************************************** 
+REGISTRARSE(http://localhost:5000/signup)
+
+Body:
+    {
+    "user" : "Lucas444",
+    "fullName" : "Lucas Cuatrochi",
+    "email": "luki440@gmail.com",
+    "telefono" : "2494456544",
+    "direccion" : "Mitre 44",
+    "pass" : "Lucas444"
+    }
+
+***************************************************************** 
+LOGUEARSE(http://localhost:5000/login)
+
+Body:
+    {
+        "user" : "German11",
+        "pass" : "German11"
+    }
+
+***************************************************************** 
 AUTENTICAR ADMIN (http://localhost:5000/admin)
 
 -Headers
@@ -48,7 +72,8 @@ AUTENTICAR ADMIN (http://localhost:5000/admin)
     {
     "user" : "German11"
     }
-------------------------------------
+
+***************************************************************** 
 
 AUTENTICAR USER (http://localhost:5000/user)
 
@@ -59,15 +84,18 @@ AUTENTICAR USER (http://localhost:5000/user)
     {
     "user" : "{username}"
     }
-------------------------------------    
+*****************************************************************    
 
-***RUTAS DE USUARIO COMUN***
+
+              ***RUTAS DE USUARIO COMUN***
+***************************************************************** 
 
 VER PRODUCTOS A LA VENTA (http://localhost:5000/user/productos)
 
 -Headers
     Authorization  :  Bearer {token}
-------------------------------------    
+
+*****************************************************************   
 
 ENVIAR PRODUCTOS SELECCIONADOS (http://localhost:5000/user/enviar)
 
@@ -84,13 +112,15 @@ ENVIAR PRODUCTOS SELECCIONADOS (http://localhost:5000/user/enviar)
         "cantidad": 5
     }
 ]
-------------------------------------    
+
+*****************************************************************    
 
 ESTADO DE PEDIDO (http://localhost:5000/user/estado/:idPedido(numero))
 
 -Headers
     Authorization  :  Bearer {token}
-------------------------------------    
+
+*****************************************************************    
 
 MODIFICAR PEDIDO (http://localhost:5000/user/modificar/:idPedido(numero))
 
@@ -107,20 +137,98 @@ MODIFICAR PEDIDO (http://localhost:5000/user/modificar/:idPedido(numero))
         "cantidad": 5
     }
 ]
-------------------------------------  
+
+*****************************************************************   
 
 CANCELAR PEDIDO (http://localhost:5000/user/cancelar/:idPedido(numero))
 
 -Headers
     Authorization  :  Bearer {token}
------------------------------------- 
+
+***************************************************************** 
 
 OBTENER FAVORITOS (http://localhost:5000/user/favoritos/:username)
 
 -Headers
     Authorization  :  Bearer {token}
 
+***************************************************************** 
 
-***RUTAS DE ADMINISTRADOR***
 
 
+               ***  RUTAS DE ADMINISTRADOR  ***
+
+***************************************************************** 
+
+OBTENER PEDIDOS SIN ENTREGAR (http://localhost:5000/admin/orders)
+
+-Headers
+    Authorization  :  Bearer {token}
+
+***************************************************************** 
+
+DETALLE DE PEDIDO (http://localhost:5000/admin/orders/detalle/:idPedido)
+
+-Headers
+    Authorization  :  Bearer {token}
+
+***************************************************************** 
+
+MODIFICAR ESTADO DE PEDIDO (http://localhost:5000/admin/orders/modificarEstado/:idPedido)
+
+-Headers
+    Authorization  :  Bearer {token}
+
+-Body
+    [
+        {
+            "estado": "ENTREG"
+        }
+    ]
+
+***************************************************************** 
+
+CARGAR NUEVO PRODUCTO (http://localhost:5000/admin/cargarProducto)
+
+-Headers
+    Authorization  :  Bearer {token}      
+
+-Body:
+    [
+        {
+            "nombreProd" : "Coca Cola 2.5LT",
+            "valorProd" : 220.00,
+            "imgProd" : "https://CocaColaDelilah.jpg",
+            "enStock" : "T"
+        }
+    ]
+
+***************************************************************** 
+
+HISTORIAL DE PEDIDOS ENTREGADOS (http://localhost:5000/admin/orders/historial)
+
+-Headers
+    Authorization  :  Bearer {token}      
+
+***************************************************************** 
+
+ELIMINAR PRODUCTO (http://localhost:5000/admin/eliminarProducto/:id_producto)
+
+-Headers
+    Authorization  :  Bearer {token}    
+
+***************************************************************** 
+
+ELIMINAR PEDIDO (http://localhost:5000/admin/orders/eliminarPedido/:idPedido)
+
+-Headers
+    Authorization  :  Bearer {token}   
+
+*****************************************************************     
+
+CANCELAR PEDIDO (http://localhost:5000/admin/orders/cancelarPedido/:idPedido)
+
+-Headers
+    Authorization  :  Bearer {token}    
+
+*****************************************************************            

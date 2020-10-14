@@ -81,6 +81,4 @@ router.route('/user/favoritos/:username').get(usuario.obtenerFavoritos);
 
 
 
-
-
 module.exports = router;

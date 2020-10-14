@@ -29,7 +29,7 @@ class AuthTokenUser{
 
             }else{
     
-                let respuesta = new response(true,500,"Usuario no autenticado");
+                let respuesta = new response(true,403,"Usuario no autenticado");
                 console.log("--Usuario no autenticado");
                 res.json(respuesta);
             }

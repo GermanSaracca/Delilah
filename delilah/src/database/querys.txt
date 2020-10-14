@@ -1,111 +1,31 @@
 
-
-{ ** Nos da usuario con su id_pedido con su producto y cantidad **
-
-SELECT
-    ped.estado,
-    ped.fecha,
-    ped.id_pedido,
-    GROUP_CONCAT(CONCAT(prod.nombre_producto, ' x ', det.cantidad)) as descripcion,
-    SUM((det.cantidad * prod.valor)) as total,
-    ped.formapago,
-    us.fullname,
-    us.direccion
-FROM
-    pedido as ped
-    JOIN usuario as us ON(ped.id_usuario = us.id_usuario)
-    JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
-    JOIN producto as prod ON(det.id_producto = prod.id_producto)
-WHERE
-    ped.id_pedido = 7;
-}
-
-
-{ ** Busco id de usuario segun su nombre de usuario **
-
-    SELECT id_usuario
-    FROM usuario
-    WHERE username = 'German22';
-}
-
+CREACION E INSERCION DE DATOS
 /* source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/creacion.sql;
 /* source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/insercion.sql;
-ADMIN
-{
-"user" : "German11",
-"fullName" : "German Saracca",
-"email": "german11@gmail.com",
-"telefono" : "2494334455",
-"direccion" : "Alsina 90",
-"pass" : "German11"
-}
-
-USUARIOS
-{
-    "user" : "German22",
-    "fullName" : "German Dosdos",
-    "email": "german22@gmail.com",
-    "telefono" : "2494678901",
-    "direccion" : "Mitre 333",
-    "pass" : "German22"
-
-}
-{
-    "user" : "Fabian33",
-    "fullName" : "Fabian Trestres",
-    "email": "fabian33@gmail.com",
-    "telefono" : "2494252565",
-    "direccion" : "Alsina 608",
-    "pass" : "Fabian33"
-
-}
-{
-    "user" : "Lucas44",
-    "fullName" : "Lucas Cuatro",
-    "email": "lucas44@gmail.com",
-    "telefono" : "2494449099",
-    "direccion" : "Rodriguez 333",
-    "pass" : "Lucas 44"
-}
-{
-    "user" : "LeoMessi10",
-    "fullName" : "Lionel Messi",
-    "email": "messi10@gmail.com",
-    "telefono" : "2494335566",
-    "direccion" : "Av.España 174",
-    "pass" : "LeoMessi10"
-}
-*/
-
-BODY PARA ENVIAR PRODUCTOS 
-[
-    {
-        "formaPago": "Efectivo"
-    },
-    {
-    "id_producto" :1,
-    "cantidad" : 3
-    },
-        {
-    "id_producto" :3,
-    "cantidad" : 4
-    }
-
-]
-
-***QUERYS***************************
 
 INSERT INTO
     pedido (id_usuario, formapago, estado)
 VALUES(2, 'Tarjeta', 'Nuevo');
+SELECT * FROM usuario;
 SELECT
     *
 FROM
     pedido_detalle;
+select * from producto;
+DELETE FROM producto WHERE id_producto = 8;
 SELECT
     *
 FROM
     pedido;
+DELETE FROM pedido WHERE id_pedido = 4;
+
+   select username from usuario where username = 'German';
+SELECT
+    *
+FROM
+    pedido
+WHERE fecha < CURDATE();
+
 SELECT
     *
 FROM
@@ -134,7 +54,7 @@ FROM
     JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
     JOIN producto as prod ON(det.id_producto = prod.id_producto)
 WHERE
-    ped.id_pedido = 1;
+    ped.id_pedido = 57;
 
 SELECT estado FROM pedido WHERE id_pedido = 3;
 
@@ -168,8 +88,69 @@ FROM
     JOIN producto as prod ON(det.id_producto = prod.id_producto)
 WHERE
     ped.id_pedido = 50;
+--Solo detalle de cada producto en el pedido
+SELECT
+    prod.nombre_producto,
+    prod.valor as valor_unitario,
+    det.cantidad,
+    (det.cantidad * prod.valor) as total,
+    prod.imagen
+FROM
+    pedido as ped
+    JOIN usuario as us ON(ped.id_usuario = us.id_usuario)
+    JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
+    JOIN producto as prod ON(det.id_producto = prod.id_producto)
+WHERE
+    ped.id_pedido = 1;
 
-//Trae los 3 pedidos mas frecuentes ordenados de mayor a menor
+
+SELECT DISTINCT
+    ped.estado,
+    ped.formapago,
+    us.direccion,
+    us.fullname,
+    us.username,
+    us.telefono,
+    us.email
+FROM
+    pedido as ped
+    JOIN usuario as us ON(ped.id_usuario = us.id_usuario)
+    JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
+    JOIN producto as prod ON(det.id_producto = prod.id_producto)
+WHERE
+    ped.id_pedido = 50;
+
+UPDATE pedido SET estado = 'CONFIRM'
+    WHERE id_pedido = 200;
+
+SELECT id_usuario FROM pedido WHERE id_pedido = 590;
+DELETE FROM pedido WHERE id_pedido = 52;
+
+SELECT * FROM producto;
+
+INSERT INTO producto
+(nombre_producto,valor,imagen,en_stock) VALUES
+('Pancho',150.00,'https://superpancho.jpg','T');
+
+SELECT
+    ped.estado,
+    ped.fecha,
+    ped.id_pedido,
+    GROUP_CONCAT(CONCAT(prod.nombre_producto, ' x ', det.cantidad)) as descripcion,
+    SUM((det.cantidad * prod.valor)) as total,
+    ped.formapago,
+    us.fullname,
+    us.username,
+    us.direccion,
+    us.telefono
+FROM
+    pedido as ped
+    JOIN usuario as us ON(ped.id_usuario = us.id_usuario)
+    JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
+    JOIN producto as prod ON(det.id_producto = prod.id_producto)
+WHERE
+    ped.id_pedido = 6 AND ped.estado = "ENTREG";
+
 SELECT 
     prod.nombre_producto,
     count(*) AS veces_pedida,
@@ -181,9 +162,11 @@ FROM
     JOIN pedido_detalle as det ON(ped.id_pedido = det.id_pedido)
     JOIN producto as prod ON(det.id_producto = prod.id_producto)
 WHERE
-    us.username = 'German22' AND ped.estado = 'ENTREG'
+    us.username = 'Fabian33' AND ped.estado = 'ENTREG'
 GROUP BY prod.nombre_producto 
 ORDER BY veces_pedida DESC
 LIMIT 3;
+
+SELECT username FROM usuario WHERE email = 'fabian33@gmail.com';
 
 

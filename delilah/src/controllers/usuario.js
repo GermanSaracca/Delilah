@@ -21,7 +21,7 @@ class Usuario{
         })
         .catch(err=>{
             console.log(err);
-            let resp =  new response(true,400,"Error al buscar todos los productos")
+            let resp =  new response(true,500,"Error al buscar todos los productos")
             res.send(resp);
         });
     };
@@ -68,7 +68,7 @@ class Usuario{
             // Si se llego hasta aca es que no cachamos ningun error, se commitea la transaccion
             await t.commit();
             //Envio el id de pedido generado
-            let resp =  new response(false,200,"Id de pedido",IdPedido);
+            let resp =  new response(false,202,"Id de pedido",IdPedido);
             res.send(resp);
 
         }catch (error){
@@ -105,7 +105,7 @@ class Usuario{
         .catch(err =>{
             
             console.log(err);
-            let resp =  new response(true,400,"Informacion invalida");
+            let resp =  new response(true,500,"Error de servidor");
             res.send(resp);
         })
     };
@@ -136,7 +136,7 @@ class Usuario{
 
                 if(diffMinutos > 8){
 
-                    let msg =  `Ya no es posible modificar su pedido ya que lo pidio hace mas de 8 minutos, ${Math.round(diffMinutos)} min para ser exactos ;)`;
+                    let msg =  `Ya no es posible modificar su pedido ya que lo pidio hace mas de 8 minutos, ${Math.round(diffMinutos)} min para ser exactos.`;
                     let resp =  new response(true,418,msg);
                     res.send(resp);
                 }else{
@@ -148,7 +148,7 @@ class Usuario{
                     })
                     .catch(error=>{
                         console.log(error);
-                        let resp =  new response(true,400,"Error de servidor");
+                        let resp =  new response(true,500,"Error de servidor");
                         res.send(resp);
                     })
                 };
@@ -161,7 +161,7 @@ class Usuario{
         })
         .catch(err=>{
             console.log(err);
-            let resp =  new response(true,400,"Error de servidor");
+            let resp =  new response(true,500,"Error de servidor");
             res.send(resp);
         })
     };
@@ -175,7 +175,7 @@ class Usuario{
         //Busco fecha y hora exacta en que se realizo el pedido que se quiere eliminar
         sequelize.query(`SELECT fecha FROM pedido WHERE id_pedido = ?`,{ replacements:[idPedido], type: sequelize.QueryTypes.SELECT })
         .then(fecha =>{
-            console.log(fecha);
+
             if(fecha != ''){
 
                 //Fecha y hora actual
@@ -205,19 +205,19 @@ class Usuario{
                         // no se pudo modificar nada ya q no existe el nro de id
                         if(update[1] === 0){
             
-                            let respuesta = new response(true,400,`El pedido nro ${idPedido} no existe`);
+                            let respuesta = new response(true,404,`El pedido nro ${idPedido} no existe`);
                             res.send(respuesta);
             
                         }else {
             
-                            let respuesta = new response(false,200,`Pedido nro ${idPedido} cancelado`);
+                            let respuesta = new response(false,202,`Pedido nro ${idPedido} cancelado`);
                             res.send(respuesta);
                         }
                     })
                     .catch(err => {
             
                         console.log(err);
-                        let respuesta = new response(true,400,"No se pudo cancelar pedido");
+                        let respuesta = new response(true,500,"No se pudo cancelar pedido");
                         res.send(respuesta);
                     })
                 };
@@ -230,7 +230,7 @@ class Usuario{
         })
         .catch(err=>{
             console.log(err);
-            let resp =  new response(true,400,"Error de servidor");
+            let resp =  new response(true,500,"Error de servidor");
             res.send(resp);
         })
     };

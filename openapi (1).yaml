@@ -1,0 +1,507 @@
+openapi: 3.0.0
+info:
+  title: Delilah
+  description: >-
+    API para pedidos de comida.
+
+    Como cliente podras registrarte,ver el lista de nuestros productos y
+
+    realizar una orden.
+
+    Los administradores del restaurante tienen la posibilidad de recibir
+
+    pedidos y actualizaros.
+  contact:
+    name: Germán Saracca
+    url: https://github.com/GermanSaracca/Delilah
+    email: gersaraca@gmail.com
+  version: '1.0'
+servers:
+- url: http://localhost:5000
+  variables: {}
+paths:
+  /signup:
+    post:
+      tags:
+      - INGRESO
+      summary: signup
+      description: Ruta de registro. 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/signuprequest'
+            example:
+              user: Lucas444
+              fullName: Lucas Cuatrochi
+              email: luki440@gmail.com
+              telefono: 2494456544
+              direccion: Mitre 44
+              pass: Lucas444
+        required: true
+      responses:
+        202:
+          description: Token creado + TOKEN
+        400:
+          description: Username already in use
+      deprecated: false
+  /login:
+    post:
+      tags:
+      - INGRESO
+      summary: login
+      description: Ruta de logueo
+      operationId: login
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginrequest'
+            example:
+              user: German11
+              pass: German11
+        required: true
+      responses:
+        202:
+          description: Token creado + TOKEN
+        403:
+          description: Contraseña invalida
+        404:
+          description: User not found in DataBase
+      deprecated: false
+  /user:
+    post:
+      tags:
+      - INGRESO
+      summary: user
+      description: Ruta donde se acepta al usuario para que ingrese a la homepage
+      operationId: user
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userrequest'
+            example:
+              user: Lucas444
+        required: true
+      responses:
+        200:
+          description: 'Usuario autenticado'
+        403:
+          description : 'Usuario no autenticado'
+        500:
+          description : 'Fallo autenticacion'
+      deprecated: false
+  /admin:
+    post:
+      tags:
+      - INGRESO
+      summary: Admin
+      description: Ruta para llegar a la homepage del administrador
+      operationId: Admin
+      parameters: []
+      requestBody:
+        description: Ruta de logueo para un usuario ya existente.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginrequest'
+            example:
+              user: German11
+        required: true
+      responses:
+        200:
+          description: 'Usuario autenticado'
+        403:
+          description : 'Usuario no autenticado'
+        500:
+          description : 'Fallo autenticacion'
+      deprecated: false
+      servers:
+      - url: http://localhost:5000
+        variables: {}
+  /user/productos:
+    get:
+      tags:
+      - USUARIO
+      summary: Obtener Menu (user)
+      description: Ruta para obtener todos los productos en stock
+      operationId: ObtenerMenu(user)
+      parameters: []
+      responses:
+        200:
+          description: 'Productos'
+        500:
+          description: "Error al buscar todos los productos"
+      deprecated: false
+  /user/enviar:
+    post:
+      tags:
+      - USUARIO
+      summary: Enviar Productos elegidos (user)
+      description: Ruta para enviar al servidor nuestros productos seleccionados
+      operationId: EnviarProductoselegidos(user)
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnviarProductoselegidos%28user%29Request'
+            example:
+            - formaPago: Efectivo
+            - id_producto: 1
+              cantidad: 2
+        required: true
+      responses:
+        202:
+          description: 'Id de pedido'
+        400:
+          description: 'Informacion invalida'
+      deprecated: false
+  /user/estado/2:
+    get:
+      tags:
+      - USUARIO
+      summary: Estado de Pedido (user)
+      description: Con esta ruta el usuario obtiene el estado de su pedido.
+      operationId: EstadodePedido(user)
+      parameters: []
+      responses:
+        200:
+          description: 'Estado de pedido'
+        400:
+          description: 'Numero de pedido no valido'
+        500:
+          description: 'Error de servidor'  
+      deprecated: false
+  /user/modificar/1:
+    put:
+      tags:
+      - USUARIO
+      summary: Modificar Pedido (user)
+      description: >-
+        Ruta para modificar pedido.
+
+        Debera enviarse el nuevo pedido completo en el body
+
+        y el numero de pedido en la ruta
+      operationId: ModificarPedido(user)
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ModificarPedido%28user%29Request'
+            example:
+            - formaPago: Efectivo
+            - id_producto: 1
+              cantidad: 12
+        required: true
+      responses:
+        202:
+          description: 'Id de pedido'
+        500:
+          description: 'Error de servidor'
+        400 :
+          description: 'Numero de pedido no valido'
+      deprecated: false
+  /user/cancelar/2:
+    put:
+      tags:
+      - USUARIO
+      summary: Cancelar pedido (user)
+      operationId: Cancelarpedido(user)
+      parameters: []
+      responses:
+        202:
+          description: 'Pedido nro "ej" cancelado'
+        404:
+          description: 'El pedido nro "ej no existe'
+      deprecated: false
+  /admin/orders:
+    get:
+      tags:
+      - ADMIN
+      summary: Obtener Pedidos sin entregar (admin)
+      operationId: ObtenerPedidossinentregar(admin)
+      parameters: []
+      responses:
+        200:
+          description: 'Lista de pedidos'
+        500:
+          description: 'Error de servidor'
+      deprecated: false
+  /admin/orders/detalle/3:
+    get:
+      tags:
+      - ADMIN
+      summary: Detalle pedido (admin)
+      operationId: Detallepedido(admin)
+      parameters: []
+      responses:
+        200:
+          description: 'Detalle pedido e informacion completa de usuario'
+        404:
+          description: 'Pedido no encontrado'
+        500:
+          description: 'Error de servidor'
+      deprecated: false
+  /admin/orders/modificarEstado/33:
+    put:
+      tags:
+      - ADMIN
+      summary: Modificar estado de pedido (admin)
+      operationId: Modificarestadodepedido(admin)
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Modificarestadodepedido%28admin%29Request'
+            example:
+            - estado: ENTREG
+        required: true
+      responses:
+        202:
+          description: 'Pedido nro {ej} modificado'
+        404:
+          description: 'El pedido nro {ej} no existe'
+        500:
+          description : 'Error de servidor'
+      deprecated: false
+  /admin/orders/cancelarPedido/3:
+    put:
+      tags:
+      - ADMIN
+      summary: Cancelar Pedido(admin)
+      operationId: CancelarPedido(admin)
+      parameters: []
+      responses:
+        202:
+          description: 'Pedido nro {ej} cancelado'
+        404:
+          description: 'El pedido nro {ej} no existe'
+        500:
+          description : 'Error de servidor'
+      deprecated: false
+  /admin/cargarProducto:
+    post:
+      tags:
+      - ADMIN
+      summary: Cargar nuevo producto (admin)
+      operationId: Cargarnuevoproducto(admin)
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Cargarnuevoproducto%28admin%29Request'
+            example:
+            - nombreProd: Coca Cola 2.5LT
+              valorProd: 220
+              imgProd: https://CocaColaDelilah.jpg
+              enStock: T
+        required: true
+      responses:
+        202:
+          description: '{ej} agregado a la lista de productos'
+        500:
+          description: ' Error de servidor'
+      deprecated: false
+  /admin/orders/historial:
+    get:
+      tags:
+      - ADMIN
+      summary: Historial de pedidos entregados
+      operationId: Historialdepedidosentregados
+      parameters: []
+      responses:
+        200:
+          description: 'Historial de pedidos entregados'
+      deprecated: false
+  /user/favoritos/German22:
+    get:
+      tags:
+      - USUARIO
+      summary: Obtener favoritos
+      operationId: Obtenerfavoritos
+      parameters: []
+      responses:
+        200:
+          description: 'Favoritos'
+      deprecated: false
+  /admin/eliminarProducto/2:
+    delete:
+      tags:
+      - ADMIN
+      summary: Eliminar producto
+      operationId: Eliminarproducto
+      parameters: []
+      responses:
+        202:
+          description: 'Prodcuto {ej} cancelado'
+        404:
+          description: 'El id: {ej} no corresponde a un producto o ya fue eliminado'
+        500:
+          description : 'Error de servidor'
+      deprecated: false
+  /admin/orders/eliminarPedido/5:
+    delete:
+      tags:
+      - ADMIN
+      summary: Eliminar pedido
+      operationId: Eliminarpedido
+      parameters: []
+      responses:
+        202:
+          description: 'Pedido nro {ej} eliminado'
+        404:
+          description: 'El pedido nro {ej} no existe'
+        500:
+          description : 'Error de servidor'
+      deprecated: false
+components:
+  schemas:
+    signuprequest:
+      title: signuprequest
+      required:
+      - user
+      - fullName
+      - email
+      - telefono
+      - direccion
+      - pass
+      type: object
+      properties:
+        user:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+        telefono:
+          type: string
+        direccion:
+          type: string
+        pass:
+          type: string
+      example:
+        user: Lucas444
+        fullName: Lucas Cuatrochi
+        email: luki440@gmail.com
+        telefono: 2494456544
+        direccion: Mitre 44
+        pass: Lucas444
+    loginrequest:
+      title: loginrequest
+      required:
+      - user
+      - pass
+      type: object
+      properties:
+        user:
+          type: string
+        pass:
+          type: string
+      example:
+        user: German11
+        pass: German11
+    userrequest:
+      title: userrequest
+      required:
+      - user
+      type: object
+      properties:
+        user:
+          type: string
+      example:
+        user: Lucas444
+    AdminRequest:
+      title: AdminRequest
+      required:
+      - user
+      type: object
+      properties:
+        user:
+          type: string
+      example:
+        user: German11
+    EnviarProductoselegidos(user)Request:
+      title: EnviarProductoselegidos(user)Request
+      type: object
+      properties:
+        formaPago:
+          type: string
+        id_producto:
+          type: integer
+          format: int32
+        cantidad:
+          type: integer
+          format: int32
+      example:
+        formaPago: Efectivo
+    ModificarPedido(user)Request:
+      title: ModificarPedido(user)Request
+      type: object
+      properties:
+        formaPago:
+          type: string
+        id_producto:
+          type: integer
+          format: int32
+        cantidad:
+          type: integer
+          format: int32
+      example:
+        formaPago: Efectivo
+    Modificarestadodepedido(admin)Request:
+      title: Modificarestadodepedido(admin)Request
+      required:
+      - estado
+      type: object
+      properties:
+        estado:
+          type: string
+      example:
+        estado: ENTREG
+    Cargarnuevoproducto(admin)Request:
+      title: Cargarnuevoproducto(admin)Request
+      required:
+        - nombreProd
+        - valorProd
+        - imgProd
+        - enStock
+      type: object
+      properties:
+        nombreProd:
+          type: string
+        valorProd:
+          type: number
+        imgProd:
+          type: string
+        enStock:
+          type: string
+      example:
+        nombreProd: Coca Cola 2.5LT
+        valorProd: 220
+        imgProd: https://CocaColaDelilah.jpg
+        enStock: T
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+- httpBearer: []
+tags:
+- name: Misc
+  description: ''

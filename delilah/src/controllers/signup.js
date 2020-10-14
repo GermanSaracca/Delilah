@@ -41,7 +41,7 @@ class signupController{
 
                 if(data != '' && user == data[0].username){
 
-                    let resp = new response(true,403,'Username already in use');
+                    let resp = new response(true,400,'Username already in use');
                     res.send(resp);
                     return;
 

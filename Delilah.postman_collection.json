@@ -1,0 +1,583 @@
+{
+	"info": {
+		"_postman_id": "2a6795a0-c471-4cfe-b755-cfd93aed996e",
+		"name": "Delilah",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\" : \"Lucas444\",\r\n    \"fullName\" : \"Lucas Cuatrochi\",\r\n    \"email\": \"luki440@gmail.com\",\r\n    \"telefono\" : \"2494456544\",\r\n    \"direccion\" : \"Mitre 44\",\r\n    \"pass\" : \"Lucas444\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"signup"
+					]
+				},
+				"description": "Ruta de registro"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWxmcmVkaXRvQGhvdG1haWwuY29tIiwicGFzcyI6IlRvYmljb3Jhem9uMjIiLCJpYXQiOjE2MDE5NDY0NjN9.HfDa14bSffqhrXfMpwFBwFygamYa0GJNm_9VVed-FFg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\" : \"German11\",\r\n    \"pass\" : \"German11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "Ruta de logueo"
+			},
+			"response": []
+		},
+		{
+			"name": "user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiTHVjYXM0NDQiLCJwYXNzIjoiTHVjYXM0NDQiLCJpYXQiOjE2MDI2MTc2NzJ9.AuF89oNZ4kHrQGzrhcL0doRskWGK36VRFUK16mX-fLk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\" : \"Lucas444\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					]
+				},
+				"description": "Ruta donde se acepta al usuario para que ingrese a la homepage"
+			},
+			"response": []
+		},
+		{
+			"name": "Admin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMTEiLCJwYXNzIjoiR2VybWFuMTEiLCJpYXQiOjE2MDI2MTc3NTR9.PBPx2XYgMymAgkC-60oCrXV-YOLGwqdDEbKnZu98Sy8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\" : \"German11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admin"
+					]
+				},
+				"description": "Ruta para llegar a la homepage del administrador"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Menu (user)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiTHVjYXM0NDQiLCJwYXNzIjoiTHVjYXM0NDQiLCJpYXQiOjE2MDI2MTc2NzJ9.AuF89oNZ4kHrQGzrhcL0doRskWGK36VRFUK16mX-fLk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/user/productos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"productos"
+					]
+				},
+				"description": "Ruta para obtener todos los productos en stock"
+			},
+			"response": []
+		},
+		{
+			"name": "Enviar Productos elegidos (user)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiTHVjYXM0NDQiLCJwYXNzIjoiTHVjYXM0NDQiLCJpYXQiOjE2MDI2MTc2NzJ9.AuF89oNZ4kHrQGzrhcL0doRskWGK36VRFUK16mX-fLk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"formaPago\": \"Efectivo\"\r\n    },\r\n    {\r\n        \"id_producto\": 1,\r\n        \"cantidad\": 2\r\n    }\r\n\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/enviar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"enviar"
+					]
+				},
+				"description": "Ruta para enviar al servidor nuestros productos seleccionados"
+			},
+			"response": []
+		},
+		{
+			"name": "Estado de Pedido (user)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiRmFiaWFuMzMiLCJmdWxsTmFtZSI6IkZhYmlhbiBUcmVzdHJlcyIsImVtYWlsIjoiZmFiaWFuMzNAZ21haWwuY29tIiwidGVsZWZvbm8iOiIyNDk0MjUyNTY1IiwiZGlyZWNjaW9uIjoiQWxzaW5hIDYwOCIsInBhc3MiOiIkMmIkMTAkY01PNlZRdlhsN2xSRDM2RnpnUXlZLlM5bUVVUzU0S1cycnkzbVU3RkZPYU1mTnI0ZHZBL08iLCJpYXQiOjE2MDIzMzE0Njl9.aa4_WPTCT-AvNUwHUdI0vFc_glVWFHCGbiAs3c-VhHw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/user/estado/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"estado",
+						"2"
+					]
+				},
+				"description": "Con esta ruta el usuario obtiene el estado de su pedido."
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Pedido (user)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiTHVjYXM0NDQiLCJwYXNzIjoiTHVjYXM0NDQiLCJpYXQiOjE2MDI2MTc2NzJ9.AuF89oNZ4kHrQGzrhcL0doRskWGK36VRFUK16mX-fLk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"formaPago\": \"Efectivo\"\r\n    },\r\n    {\r\n        \"id_producto\": 1,\r\n        \"cantidad\": 12\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/modificar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"modificar",
+						"1"
+					]
+				},
+				"description": "Ruta para modificar pedido.\r\nDebera enviarse el nuevo pedido completo en el body\r\ny el numero de pedido en la ruta"
+			},
+			"response": []
+		},
+		{
+			"name": "Cancelar pedido (user)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiTHVjYXM0NDQiLCJwYXNzIjoiTHVjYXM0NDQiLCJpYXQiOjE2MDI2MTc2NzJ9.AuF89oNZ4kHrQGzrhcL0doRskWGK36VRFUK16mX-fLk"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/user/cancelar/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"cancelar",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Pedidos sin entregar (admin)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMTEiLCJmdWxsTmFtZSI6Ikdlcm1hbiBTYXJhY2NhIiwiZW1haWwiOiJnZXJtYW4xMUBnbWFpbC5jb20iLCJ0ZWxlZm9ubyI6IjI0OTQzMzQ0NTUiLCJkaXJlY2Npb24iOiJBbHNpbmEgOTAiLCJwYXNzIjoiJDJiJDEwJFhvM3JiSEVYZUxzVWxUaW02bEdTQU9WRGNNUHFTcUVBcnlobVB5M3VNZ1hNNXM5Q3l0V1ZLIiwiaWF0IjoxNjAyMTk2ODMwfQ.ERYcqdYeughV0A0puLGTnJvWsfsMwGYtvFY3byDdYAY",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/admin/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Detalle pedido (admin)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMTEiLCJmdWxsTmFtZSI6Ikdlcm1hbiBTYXJhY2NhIiwiZW1haWwiOiJnZXJtYW4xMUBnbWFpbC5jb20iLCJ0ZWxlZm9ubyI6IjI0OTQzMzQ0NTUiLCJkaXJlY2Npb24iOiJBbHNpbmEgOTAiLCJwYXNzIjoiJDJiJDEwJFhvM3JiSEVYZUxzVWxUaW02bEdTQU9WRGNNUHFTcUVBcnlobVB5M3VNZ1hNNXM5Q3l0V1ZLIiwiaWF0IjoxNjAyMTk2ODMwfQ.ERYcqdYeughV0A0puLGTnJvWsfsMwGYtvFY3byDdYAY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/admin/orders/detalle/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"orders",
+						"detalle",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar estado de pedido (admin)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMTEiLCJmdWxsTmFtZSI6Ikdlcm1hbiBTYXJhY2NhIiwiZW1haWwiOiJnZXJtYW4xMUBnbWFpbC5jb20iLCJ0ZWxlZm9ubyI6IjI0OTQzMzQ0NTUiLCJkaXJlY2Npb24iOiJBbHNpbmEgOTAiLCJwYXNzIjoiJDJiJDEwJFhvM3JiSEVYZUxzVWxUaW02bEdTQU9WRGNNUHFTcUVBcnlobVB5M3VNZ1hNNXM5Q3l0V1ZLIiwiaWF0IjoxNjAyMTk2ODMwfQ.ERYcqdYeughV0A0puLGTnJvWsfsMwGYtvFY3byDdYAY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"estado\": \"ENTREG\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admin/orders/modificarEstado/33",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"orders",
+						"modificarEstado",
+						"33"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancelar Pedido(admin)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMTEiLCJmdWxsTmFtZSI6Ikdlcm1hbiBTYXJhY2NhIiwiZW1haWwiOiJnZXJtYW4xMUBnbWFpbC5jb20iLCJ0ZWxlZm9ubyI6IjI0OTQzMzQ0NTUiLCJkaXJlY2Npb24iOiJBbHNpbmEgOTAiLCJwYXNzIjoiJDJiJDEwJFhvM3JiSEVYZUxzVWxUaW02bEdTQU9WRGNNUHFTcUVBcnlobVB5M3VNZ1hNNXM5Q3l0V1ZLIiwiaWF0IjoxNjAyMTk2ODMwfQ.ERYcqdYeughV0A0puLGTnJvWsfsMwGYtvFY3byDdYAY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/admin/orders/cancelarPedido/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"orders",
+						"cancelarPedido",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cargar nuevo producto (admin)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMTEiLCJmdWxsTmFtZSI6Ikdlcm1hbiBTYXJhY2NhIiwiZW1haWwiOiJnZXJtYW4xMUBnbWFpbC5jb20iLCJ0ZWxlZm9ubyI6IjI0OTQzMzQ0NTUiLCJkaXJlY2Npb24iOiJBbHNpbmEgOTAiLCJwYXNzIjoiJDJiJDEwJFhvM3JiSEVYZUxzVWxUaW02bEdTQU9WRGNNUHFTcUVBcnlobVB5M3VNZ1hNNXM5Q3l0V1ZLIiwiaWF0IjoxNjAyMTk2ODMwfQ.ERYcqdYeughV0A0puLGTnJvWsfsMwGYtvFY3byDdYAY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"nombreProd\" : \"Coca Cola 2.5LT\",\r\n        \"valorProd\" : 220.00,\r\n        \"imgProd\" : \"https://CocaColaDelilah.jpg\",\r\n        \"enStock\" : \"T\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/admin/cargarProducto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"cargarProducto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Historial de pedidos entregados",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMTEiLCJmdWxsTmFtZSI6Ikdlcm1hbiBTYXJhY2NhIiwiZW1haWwiOiJnZXJtYW4xMUBnbWFpbC5jb20iLCJ0ZWxlZm9ubyI6IjI0OTQzMzQ0NTUiLCJkaXJlY2Npb24iOiJBbHNpbmEgOTAiLCJwYXNzIjoiJDJiJDEwJFhvM3JiSEVYZUxzVWxUaW02bEdTQU9WRGNNUHFTcUVBcnlobVB5M3VNZ1hNNXM5Q3l0V1ZLIiwiaWF0IjoxNjAyMTk2ODMwfQ.ERYcqdYeughV0A0puLGTnJvWsfsMwGYtvFY3byDdYAY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/admin/orders/historial",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"orders",
+						"historial"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener favoritos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMjIiLCJwYXNzIjoiR2VybWFuMjIiLCJpYXQiOjE2MDI1NDM3MTZ9.9FzL8pb7yAeKqYDuBOUBedZ-yhjfMvA_phI4pcT2oo0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/user/favoritos/German22",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"favoritos",
+						"German22"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar producto",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMTEiLCJmdWxsTmFtZSI6Ikdlcm1hbiBTYXJhY2NhIiwiZW1haWwiOiJnZXJtYW4xMUBnbWFpbC5jb20iLCJ0ZWxlZm9ubyI6IjI0OTQzMzQ0NTUiLCJkaXJlY2Npb24iOiJBbHNpbmEgOTAiLCJwYXNzIjoiJDJiJDEwJFhvM3JiSEVYZUxzVWxUaW02bEdTQU9WRGNNUHFTcUVBcnlobVB5M3VNZ1hNNXM5Q3l0V1ZLIiwiaWF0IjoxNjAyMTk2ODMwfQ.ERYcqdYeughV0A0puLGTnJvWsfsMwGYtvFY3byDdYAY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/admin/eliminarProducto/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"eliminarProducto",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar pedido",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiR2VybWFuMTEiLCJwYXNzIjoiR2VybWFuMTEiLCJpYXQiOjE2MDI2MTc3NTR9.PBPx2XYgMymAgkC-60oCrXV-YOLGwqdDEbKnZu98Sy8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/admin/orders/eliminarPedido/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"orders",
+						"eliminarPedido",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

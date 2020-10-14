@@ -29,7 +29,7 @@ class AuthToken{
                 next();
             }else{
     
-                let respuesta = new response(true,500,"Usuario no autenticado");
+                let respuesta = new response(true,403,"Usuario no autenticado");
                 console.log("--Usuario no autenticado");
                 res.json(respuesta);
             }
@@ -61,7 +61,7 @@ class AuthToken{
 
                 }else {
 
-                    let respuesta = new response(false,200,"Usted no posee los privilegios");
+                    let respuesta = new response(true,403,"Usted no posee los privilegios");
                     console.log("--Usuario no administrador");
                     res.status(400).json(respuesta);
                 }

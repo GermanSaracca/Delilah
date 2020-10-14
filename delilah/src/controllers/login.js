@@ -30,7 +30,7 @@ class loginController{
                 user = await UsEr[0].username;
             }else{
 
-                let resp = new response(true,400,"Email no encontrado");
+                let resp = new response(true,404,"Email no encontrado");
                 res.send(resp);
             };
 
@@ -63,7 +63,7 @@ class loginController{
 
                             if(info == ''){
 
-                                let resp = new response(true,403,'User not found in DataBase');
+                                let resp = new response(true,404,'User not found in DataBase');
                                 res.send(resp);
                 
                             }else{
@@ -71,7 +71,7 @@ class loginController{
                                 console.log(info);
                                 //Si existe creo y envio el token
                                 const accesToken = jwt.sign(infoUser,jwtSign);
-                                let resp = new response(false,202,"Token creado",accesToken);
+                                let resp = new response(false,200,"Token creado",accesToken);
         
                                 res.send(resp);
                                 console.log('Token creado');
@@ -94,17 +94,17 @@ class loginController{
                 })
                 .catch(err=>{
 
-                    res.status(400).send();
+                    res.status(500).send();
                     console.log(err)
                 })
 
             }else{
-                res.status(400).send("Usuario o contraseña invalida");
+                res.status(403).send("Usuario o contraseña invalida");
             }
 
         }else {
 
-            let resp = new response(true,400,"Usuario no encontrado");
+            let resp = new response(true,404,"Usuario no encontrado");
             res.send(resp);
         };
     };
