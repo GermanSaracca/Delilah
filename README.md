@@ -19,7 +19,6 @@ Dentro de 'bin', clickear la barra de direcciones y escribir "cmd" para abrir la
 6- Dentro de la consola de Windows tipear : mysql -u root
 
 7- Luego ingresar las siguientes lineas por separado. 
-<<<<<<< HEAD
 Una corresponde a la crecion de las tablas y la otra a la insercion de productos.
 CREACION DE TABLAS => 'source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/creacion.sql;'
 INSERCION DE DATOS => 'source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/insercion.sql;'
@@ -32,12 +31,6 @@ Y hay un middleware que detecta que quien quiera eliminar un pedido sea el dueñ
 Por lo tanto tener en cuenta el token agregado al Header que corresponda.
 
 
-=======
-   Una corresponde a la crecion de las tablas y la otra a la insercion de productos.
-  CREACION DE TABLAS => 'source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/creacion.sql;'
-  INSERCION DE DATOS => 'source D:/Users/Ger/Desktop/ProyectoDelilah/Delilah/delilah/src/database/insercion.sql;'
-  
->>>>>>> 72f01a1f3c8842a1fa50bc91a62e75389a89f378
 8-Dentro de la consola de Windows tipear 'use delilah;'
 
 9- Dentro de la consola de VSCode posicionarse dentro de la carpeta 'src' y tipear 'nodemon index'
@@ -48,9 +41,5 @@ Por lo tanto tener en cuenta el token agregado al Header que corresponda.
       Executing (default): SELECT 1+1 AS result
       Connection with DATABASE has been established successfully.
 
-<<<<<<< HEAD
 10- El archivo 'Delilah.postman_collection.json' contiene la coleccion de todos los endpoints.
 Se puede importar a Postman y deberia estar lista para usar siguiendo los pasos dados.
-
-=======
->>>>>>> 72f01a1f3c8842a1fa50bc91a62e75389a89f378
